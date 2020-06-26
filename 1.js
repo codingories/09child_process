@@ -1,14 +1,22 @@
 const child_process = require('child_process')
 const {exec} = child_process
+const util = require('util')
 
-const streams = exec('ls -l ../')
+const exec2 = util.promisify(exec);
 
-streams.stdout.on('data', (chunk)=>{
-  console.log('得到了数据')
-  console.log(chunk)
-})
 
-streams.stderr.on('data')
+exec2('ls -l ../').then(data => {
+  console.log(data.stdout)
+});
+
+
+
+// streams.stdout.on('data', (chunk)=>{
+//   console.log('得到了数据')
+//   console.log(chunk)
+// })
+
+// streams.stderr.on('data')
 
 
 // exec('ls ../',(error, stdout,stderr)=>{
